@@ -1,31 +1,12 @@
 import React from 'react';
-import logo from './logo.svg';
-import { Provider } from 'react-redux'
-import firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/firestore' // <- needed if using firestore
-import { ThemeProvider, ColorModeProvider, CSSReset } from '@chakra-ui/core';
+import { ThemeProvider, ColorModeProvider, CSSReset, Box } from '@chakra-ui/core';
 import { Router } from './shared/routing/router';
 import { BrowserRouter } from 'react-router-dom';
 import { theme } from './styles/theme';
-
-const rrfConfig = {
-    userProfile: 'users',
-    useFirestoreForProfile: true // Firestore for Profile instead of Realtime DB
-}
-
-firebase.initializeApp({
-    "projectId": "ppe-backend",
-    "databaseURL": "https://ppe-backend.firebaseio.com",
-    "storageBucket": "ppe-backend.appspot.com",
-    "locationId": "us-central",
-    "apiKey": "AIzaSyB3DzgwCTSL-hllWbLF1_hZGqSgHDb9yY4",
-    "authDomain": "ppe-backend.firebaseapp.com",
-    "messagingSenderId": "112984851477"
-});
-
-firebase.firestore()
-firebase.analytics()
+import { HeaderComponent } from './shared/components/header/header.jsx';
+import { FooterComponent } from './shared/components/footer/footer';
 
 class App extends React.Component {
     render() {
@@ -34,8 +15,12 @@ class App extends React.Component {
                 <BrowserRouter>
                     <ThemeProvider theme={theme}>
                         <ColorModeProvider>
-                            <CSSReset />
-                            <Router />
+                            {/* <CSSReset /> */}
+                            <Box paddingX="48" paddingY="16" bg="teal.50" color="teal.700">
+                                <HeaderComponent />
+                                <Router />
+                                <FooterComponent/>
+                            </Box>
                         </ColorModeProvider>
                     </ThemeProvider>
                 </BrowserRouter>

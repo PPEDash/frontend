@@ -1,24 +1,17 @@
 import firebase, { User } from 'firebase/app';
-import { authState as aS } from 'rxfire/auth'
-import { filter } from "rxjs/operators";
-import { collectionData, doc } from 'rxfire/firestore';
-import { Observable } from 'rxjs';
-
-
-import { UID } from './models/user';
 
 import "firebase/firestore"
 import "firebase/analytics"
 import "firebase/auth"
 
 const appConfig = {
-    "projectId": "ppe-backend",
-    "databaseURL": "https://ppe-backend.firebaseio.com",
-    "storageBucket": "ppe-backend.appspot.com",
-    "locationId": "us-central",
-    "apiKey": "AIzaSyB3DzgwCTSL-hllWbLF1_hZGqSgHDb9yY4",
-    "authDomain": "ppe-backend.firebaseapp.com",
-    "messagingSenderId": "112984851477"
+    "projectId": process.env.PROJECT_ID,
+    "databaseURL": process.env.DATABASE_URL,
+    "storageBucket": process.env.STORAGE_BUCKET,
+    "locationId": process.env.LOCATION_ID,
+    "apiKey": process.env.API_KEY,
+    "authDomain": process.env.AUTH_DOMAIN,
+    "messagingSenderId": process.env.MESSAGING_SENDER_ID
 }
 
 // {
