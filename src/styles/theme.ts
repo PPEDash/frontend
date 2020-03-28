@@ -10,7 +10,9 @@ export const theme = {
         bg: "#285E61"
     },
     fonts: {
-        body: "Work Sans",
+        body: "Work Sans, sans-serif",
+        text: "Work Sans, sans-serif",
+        default: "Work Sans, sans-serif",
         heading: "Crimson Text",
         mono: "Monaco"
     },

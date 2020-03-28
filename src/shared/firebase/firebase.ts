@@ -1,8 +1,12 @@
+import { MarketplaceType } from './../../models/ppeModels';
 import firebase, { User } from 'firebase/app';
 
 import "firebase/firestore"
 import "firebase/analytics"
 import "firebase/auth"
+import { collectionData } from 'rxfire/firestore';
+import { Observable } from 'rxjs';
+
 
 const appConfig = {
     "projectId": process.env.PROJECT_ID,
@@ -29,4 +33,8 @@ export const app = firebase.initializeApp(appConfig)
 
 export const firestore = firebase.firestore(app)
 
+export const auth = app.auth()
+
 export const analytics = firebase.analytics(app)
+
+export const marketplace: Observable<MarketplaceType> = collectionData(firestore.collection("models"), "id")
