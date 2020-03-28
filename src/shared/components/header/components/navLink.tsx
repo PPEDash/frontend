@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { Tooltip, Link as ChakraLink, Text, Flex, Box as ChakraBox } from '@chakra-ui/core';
 import { Link as RLink } from 'react-router-dom';
+import { IconType } from 'react-icons/lib/cjs';
 
 export interface HeaderNavLinkProps {
     to: string
-    icon?: Component
+    icon?: IconType
     name?: string
 }
 
@@ -16,7 +17,7 @@ export const HeaderNavLink: React.FC<HeaderNavLinkProps> = ({ to, icon, name }) 
         <Tooltip hasArrow placement="bottom" aria-label={name as string} label={name} fontFamily="Work Sans" bg="teal.300">
             <Link as={RLink} to={to}>
                 {
-                    icon && <Box as={icon} size="3rem" />   
+                    icon && <Box as={icon} size="3rem"/>   
                 }
                 {
                     icon === undefined && <Text fontSize="2xl">{name}</Text>
