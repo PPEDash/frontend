@@ -83,6 +83,9 @@ export const MakerStartPage = () => {
                                             <Checkbox fontFamily="text" value="itachi">PBT</Checkbox>
                                             <Checkbox fontFamily="text" value="madara">ABS</Checkbox>
                                             <Checkbox fontFamily="text" value="kisame">PLA</Checkbox>
+                                            <Checkbox fontFamily="text" value="sasori">PA</Checkbox>
+                                            <Checkbox fontFamily="text" value="hidan">TPU</Checkbox>
+                                            <Checkbox fontFamily="text" value="kakuzu">PETG</Checkbox>
                                         </CheckboxGroup>
                                     </FormControl>
 
