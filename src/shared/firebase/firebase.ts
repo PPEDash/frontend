@@ -1,11 +1,13 @@
-import { MarketplaceType } from './../../models/ppeModels';
+import { MarketplaceType, PrintableProduct } from './../../models/ppeModels';
 import firebase, { User } from 'firebase/app';
 
 import "firebase/firestore"
 import "firebase/analytics"
 import "firebase/auth"
-import { collectionData } from 'rxfire/firestore';
+import { collectionData, docData } from 'rxfire/firestore';
 import { Observable } from 'rxjs';
+import { CuttableProduct } from '../../models/ppeModels';
+
 
 
 const appConfig = {
@@ -29,7 +31,16 @@ const appConfig = {
 //     "measurementId": process.env["measurementId"]
 //   }
 
-export const app = firebase.initializeApp(appConfig)
+export const app = firebase.initializeApp({
+    apiKey: "AIzaSyB3DzgwCTSL-hllWbLF1_hZGqSgHDb9yY4",
+    authDomain: "ppe-backend.firebaseapp.com",
+    databaseURL: "https://ppe-backend.firebaseio.com",
+    projectId: "ppe-backend",
+    storageBucket: "ppe-backend.appspot.com",
+    messagingSenderId: "112984851477",
+    appId: "1:112984851477:web:a0394b8c865faebe3d7a1c",
+    measurementId: "G-2NZNQE33NW"
+  })
 
 export const firestore = firebase.firestore(app)
 
@@ -38,3 +49,9 @@ export const auth = app.auth()
 export const analytics = firebase.analytics(app)
 
 export const marketplace: Observable<MarketplaceType> = collectionData(firestore.collection("models"), "id")
+
+export const getProduct = (id: string): Observable<PrintableProduct | CuttableProduct> => {
+    return docData(firestore.collection("models").doc(id))
+}
+
+

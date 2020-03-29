@@ -34,15 +34,15 @@ export const MarketplacePage = () => {
 
             <Divider marginY="sm" />
 
-            <Box>
+            <Flex flexDir="row" flexWrap="wrap" justify="space-between">
 
                 {
                     products.length !== 0 && (
                         products.map((el: PrintableProduct, index, arr) => {
                             return (
 
-                                <Box bg="teal.700" color="teal.50" boxShadow="lg" maxW="sm" borderWidth="1px" rounded="lg" overflow="hidden">
-                                    <Image src={el.images[0]} />
+                                <Box marginY="3" bg="teal.700" color="teal.50" boxShadow="lg" borderWidth="1px" rounded="lg" d="flex" flexDir="row" overflow="scroll">
+                                    <Image src={el.images[0]} maxH="lg" maxW="sm" />
 
                                     <Box p="6" roundedTop="md">
                                         <Box d="flex" alignItems="baseline">
@@ -93,7 +93,7 @@ export const MarketplacePage = () => {
                         }))
                 }
 
-            </Box>
+            </Flex>
 
         </Box>
     )

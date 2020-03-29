@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Box, Heading, Text, Divider, Link, Flex, Button, FormControl, FormLabel, Input, Stack, Checkbox, CheckboxGroup } from '@chakra-ui/core';
+import { Box, Heading, Text, Divider, Link, Flex, Button, FormControl, FormLabel, Input, Stack, Checkbox, CheckboxGroup, NumberInput, Slider, SliderFilledTrack, SliderTrack, SliderThumb } from '@chakra-ui/core';
 import { User } from 'firebase';
 import { app, auth, firestore } from '../../shared/firebase/firebase';
 import { user as RxUser } from "rxfire/auth";
@@ -7,9 +7,11 @@ import firebase from 'firebase/app';
 import { FiAlertCircle, FiCheckCircle, FiUserCheck } from 'react-icons/fi';
 import { FaGoogle } from "react-icons/fa";
 import { Formik, Field, useFormik } from 'formik'
+import { useHistory } from 'react-router-dom';
 
 export const MakerStartPage = () => {
 
+    const history = useHistory()
     const login = () => {
         const provider = new firebase.auth.GoogleAuthProvider()
         app.auth().signInWithPopup(provider)
@@ -20,15 +22,23 @@ export const MakerStartPage = () => {
             printer: "",
             plasticsAvailable: [""],
             location: "",
-            timeAvailable: ""
+            timeAvailable: 0,
+
         },
         onSubmit: (async (e, a) => {
-            console.log(e)
-            console.log(a)
+            await firestore.collection("users").doc(user?.uid).set({
+                printer: e.printer,
+                plasticsAvailable: e.plasticsAvailable.shift(),
+                location: e.location,
+                timeAvailable: e.timeAvailable,
+            }).then(e => history.push("/marketplace"))
+
         })
     })
 
     const [user, setUser] = useState<User | undefined>(undefined)
+
+    const [hovered, setHover] = useState(false)
 
     useEffect(() => {
 
@@ -44,16 +54,17 @@ export const MakerStartPage = () => {
             <Divider />
             <Heading fontSize="6xl" fontWeight="thin">Get Started</Heading>
             <Flex><Text>We don't store any data that you don't give us, or that we don't have express consent for.</Text></Flex>
-            <Flex align="center"> <Button leftIcon={FaGoogle} onClick={login} isDisabled={user !== undefined}>Log In</Button> <Box paddingX="3" size="2rem" as={FiUserCheck} /></Flex>
+            <Flex align="center"> <Button leftIcon={FaGoogle} onClick={login} isDisabled={user !== null}>Log In</Button> <Box paddingX="3" size="2rem" as={FiUserCheck} /></Flex>
             {
                 !!user && (
                     <Box>
                         <Text fontSize="2xl">Let's go, {user.displayName}!</Text>
-                        <Flex >
-                            <Box border="1px" padding={[3, 6, 9, 12]} marginY="2rem" borderRadius="md" borderColor="teal.700">
-                                <Heading fontSize="4xl" fontWeight="thin">Maker Details</Heading>
-                                <form onSubmit={formik.handleSubmit}>
-                                    <FormControl>
+                        <form onSubmit={formik.handleSubmit}>
+                            <Flex flexDir="row" wrap="wrap">
+                                <Box border="1px" padding={[3, 6, 9, 12]} marginY="2rem" borderRadius="md" borderColor="teal.700">
+                                    <Heading fontSize="4xl" fontWeight="thin">Maker Details</Heading>
+
+                                    <FormControl isRequired>
                                         <Text>What 3d Printer do you have?</Text>
                                         <Input
                                             isFullWidth={false}
@@ -66,64 +77,65 @@ export const MakerStartPage = () => {
                                         />
                                     </FormControl>
 
-                                    <FormControl>
+                                    <FormControl isRequired>
                                         <Text>What plastics do you have access to?</Text>
                                         <CheckboxGroup value={formik.values.plasticsAvailable} onChange={(values) => formik.setValues({ ...formik.values, plasticsAvailable: values as string[] })} variantColor="teal">
-                                            <Checkbox fontFamily="text" value="itachi">Itachi</Checkbox>
-                                            <Checkbox fontFamily="text" value="madara">Madara</Checkbox>
-                                            <Checkbox fontFamily="text" value="kisame">Kisame</Checkbox>
+                                            <Checkbox fontFamily="text" value="itachi">PBT</Checkbox>
+                                            <Checkbox fontFamily="text" value="madara">ABS</Checkbox>
+                                            <Checkbox fontFamily="text" value="kisame">PLA</Checkbox>
                                         </CheckboxGroup>
                                     </FormControl>
 
-                                    <FormControl>
-                                        <Text>What plastics do you have access to?</Text>
-                                        <CheckboxGroup value={formik.values.plasticsAvailable} onChange={(values) => formik.setValues({ ...formik.values, plasticsAvailable: values as string[] })} variantColor="teal">
-                                            <Checkbox fontFamily="text" value="itachi">Itachi</Checkbox>
-                                            <Checkbox fontFamily="text" value="madara">Madara</Checkbox>
-                                            <Checkbox fontFamily="text" value="kisame">Kisame</Checkbox>
-                                        </CheckboxGroup>
-                                    </FormControl>
 
-                                </form>
-                            </Box>
-                            <Box border="1px" padding={[3, 6, 9, 12]} marginY="2rem" borderRadius="md" borderColor="teal.700">
-                                <Heading fontSize="4xl" fontWeight="thin">Personal Details</Heading>
-                                <form onSubmit={formik.handleSubmit}>
-                                    <FormControl>
-                                        <Text>What 3d Printer do you have?</Text>
+                                    {/* </Box>
+                                <Box border="1px" padding={[3, 6, 9, 12]} marginY="2rem" marginLeft="2" borderRadius="md" borderColor="teal.700"> */}
+                                    <Heading fontSize="4xl" fontWeight="thin">Personal Details</Heading>
+
+                                    <FormControl isRequired>
+                                        <Text>Where are you located?</Text>
                                         <Input
                                             isFullWidth={false}
                                             placeholder="3D Printer"
-                                            id="printer"
-                                            name="printer"
+                                            id="location"
+                                            name="location"
                                             type="text"
                                             onChange={formik.handleChange}
-                                            value={formik.values.printer}
+                                            value={formik.values.location}
                                         />
                                     </FormControl>
 
-                                    <FormControl>
-                                        <Text>What plastics do you have access to?</Text>
-                                        <CheckboxGroup value={formik.values.plasticsAvailable} onChange={(values) => formik.setValues({ ...formik.values, plasticsAvailable: values as string[] })} variantColor="teal">
-                                            <Checkbox fontFamily="text" value="itachi">Itachi</Checkbox>
-                                            <Checkbox fontFamily="text" value="madara">Madara</Checkbox>
-                                            <Checkbox fontFamily="text" value="kisame">Kisame</Checkbox>
-                                        </CheckboxGroup>
+                                    <FormControl isRequired>
+                                        <Text>How many hours a week are you available?</Text>
+                                        <Flex>
+                                            <NumberInput
+                                                maxW="100px"
+                                                mr="2rem"
+                                                onChange={(value: any) => formik.setValues({ ...formik.values, timeAvailable: value })}
+                                                value={formik.values.timeAvailable}
+                                            />
+                                            <Slider flex="1" onChange={(value: number) => formik.setValues({ ...formik.values, timeAvailable: value })}
+                                                value={formik.values.timeAvailable}>
+                                                <SliderTrack />
+                                                <SliderFilledTrack />
+                                                <SliderThumb
+                                                    fontSize="sm"
+                                                    width="32px"
+                                                    height="20px"
+                                                    children={formik.values.timeAvailable}
+                                                />
+                                            </Slider>
+                                        </Flex>
                                     </FormControl>
 
-                                    <FormControl>
-                                        <Text>What plastics do you have access to?</Text>
-                                        <CheckboxGroup value={formik.values.plasticsAvailable} onChange={(values) => formik.setValues({ ...formik.values, plasticsAvailable: values as string[] })} variantColor="teal">
-                                            <Checkbox fontFamily="text" value="itachi">Itachi</Checkbox>
-                                            <Checkbox fontFamily="text" value="madara">Madara</Checkbox>
-                                            <Checkbox fontFamily="text" value="kisame">Kisame</Checkbox>
-                                        </CheckboxGroup>
-                                    </FormControl>
 
-                                </form>
+                                </Box>
+
+                            </Flex>
+                            <Box onClick={formik.handleSubmit} border="1px" onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)} bg={hovered ? "teal.700" : "teal.50"} color={!hovered ? "teal.700" : "teal.50"} borderRadius="md" borderColor="teal.700" padding="0" transition="all 0.1s ease-in" cursor="pointer" maxW="sm" d="flex" alignContent="center" justifyContent="center">
+                                <Text fontSize="lg">Submit</Text>
+
                             </Box>
-
-                        </Flex>
+                        </form>
                     </Box>
 
                 )
