@@ -36,9 +36,9 @@ export const LandingPage: React.FC<{}> = () => {
             <Flex marginTop="12" height="35%" flexDirection="row" justify="space-between" align="center">
                 {/* <Flex direction="row" justify="space-between"> */}
                     
-                    <BoxLink text="Doctor" to="/doctors" />
-                    <Heading marginY="18" fontSize="6xl" fontWeight="thin">I am a...</Heading>
                     <BoxLink text="Maker" to="/makers"/>
+                    <Heading marginY="18" fontSize="6xl" fontWeight="thin">I am a...</Heading>
+                    <BoxLink text="Healthcare provider" to="/doctors" />
                 {/* </Flex> */}
             </Flex>
         </Box>
