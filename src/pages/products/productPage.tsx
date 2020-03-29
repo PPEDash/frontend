@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Badge } from '@chakra-ui/core';
 import { docData } from 'rxfire/firestore/dist/firestore';
 import { firestore, getProduct } from '../../shared/firebase/firebase';
 import { Heading, Text, Box, Link, Divider, Flex, Image } from '@chakra-ui/core';
@@ -25,9 +26,16 @@ export const ProductPage: React.FC<any> = (props: any) => {
                 <Box marginX="3">
                     <Text>What is it?</Text>
                     <Heading>Information</Heading>
-                    <Text>Plastic type(s): {product?.plasticType}</Text>
+                    <Text>Plastic type(s):</Text>
+                    {
+                        product?.plasticType.map(plType => (
+                              <Badge fontFamily="text" rounded="full" px="5" variantColor="pink">
+                                  {plType}
+                              </Badge>
+                          ))
+                      }
                     <Text>Original URL: <a href={product?.originalURL}>{product?.originalURL.slice(7, 15)}...</a></Text>
-                    <Text>Type: {product?.type}</Text>
+                    <Text>Type: <Badge fontFamily="text" rounded="full" px="5" variantColor="pink">{product?.type}</Badge></Text>
                     <Text>Requires 3D Printed supports: {!!product?.supports}</Text>
                 </Box>
 
