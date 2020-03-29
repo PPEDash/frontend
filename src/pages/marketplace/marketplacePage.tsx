@@ -20,7 +20,6 @@ export const MarketplacePage = () => {
 
     useEffect(() => {
         marketplace.subscribe(values => setProducts(values))
-
     })
     return (
         <Box>
@@ -46,9 +45,14 @@ export const MarketplacePage = () => {
 
                                     <Box p="6" roundedTop="md">
                                         <Box d="flex" alignItems="baseline">
-                                            <Badge fontFamily="text" rounded="full" px="5" variantColor="pink">
-                                                {el.plasticType}
-                                            </Badge>
+                                            {
+                                                el.plasticType.map(plType => (
+                                                    <Badge fontFamily="text" rounded="full" px="5" variantColor="pink">
+                                                        {plType}
+                                                    </Badge>
+                                                ))
+                                            }
+
                                             <Badge marginX="1" fontFamily="text" rounded="full" px="5" variantColor="pink">
                                                 {el.type}
                                             </Badge>
@@ -75,11 +79,11 @@ export const MarketplacePage = () => {
                                         </Box>
 
                                         {/* <Tooltip hasArrow placement="bottom" aria-label={"Go"} label={"Go"} fontFamily="Work Sans" bg="teal.300"> */}
-                                            <Link as={RLink} to={`/products/${el.id}`}>
-                                                <Box d="flex" alignItems="center" justifyContent="center" bg="teal.50" color="teal.700" p="4" alignContent="center">
-                                                    <Text>Go</Text>
-                                                </Box>
-                                            </Link>
+                                        <Link as={RLink} to={`/products/${el.id}`}>
+                                            <Box d="flex" alignItems="center" justifyContent="center" bg="teal.50" color="teal.700" p="4" alignContent="center">
+                                                <Text>Go</Text>
+                                            </Box>
+                                        </Link>
                                         {/* </Tooltip> */}
                                         {/* <Tooltip hasArrow placement="bottom" aria-label={"Go"} label={"Go"} fontFamily="Work Sans" bg="teal.300">
                                             <CLink href={el.downloadURLs[0].url}>
