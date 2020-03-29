@@ -40,7 +40,7 @@ export const MarketplacePage = () => {
                         products.map((el: PrintableProduct, index, arr) => {
                             return (
 
-                                <Box marginY="3" bg="teal.700" color="teal.50" boxShadow="lg" borderWidth="1px" rounded="lg" d="flex" flexDir="row" overflow="scroll">
+                                <Box marginY="3" bg="teal.700" color="teal.50" boxShadow="lg" borderWidth="1px" rounded="lg" d="flex" flexDir="row" overflow="scroll" w="100%">
                                     <Image src={el.images[0]} maxH="lg" maxW="sm" />
 
                                     <Box p="6" roundedTop="md">

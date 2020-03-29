@@ -95,7 +95,7 @@ export const MakerStartPage = () => {
                                         <Text>Where are you located?</Text>
                                         <Input
                                             isFullWidth={false}
-                                            placeholder="3D Printer"
+                                            placeholder="ZIP code"
                                             id="location"
                                             name="location"
                                             type="text"
