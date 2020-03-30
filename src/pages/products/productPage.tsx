@@ -30,7 +30,7 @@ export const ProductPage: React.FC<any> = (props: any) => {
                     {
                         product?.plasticType.map(plType => (
                               <Badge fontFamily="text" rounded="full" px="5" variantColor="pink">
-                                  {plType}
+                                  {plType.plastic}
                               </Badge>
                           ))
                       }
@@ -55,8 +55,7 @@ export const ProductPage: React.FC<any> = (props: any) => {
                     </Flex>
                 </Box>
                 <Box>
-                    <Text>Ready to build?</Text>
-                    <Heading>Downloads</Heading>
+                    <Heading>Build it</Heading>
                     <Box d="flex" flexDir="row">
                         {product?.downloadURLs.map(url => {
                             return (
@@ -73,6 +72,28 @@ export const ProductPage: React.FC<any> = (props: any) => {
                             )
                         })}
                     </Box>
+                </Box>
+                <Box>
+                    <Heading>Sterilize it</Heading>
+                    <Box d="flex" flexDir="row">
+                        {product?.plasticType.map(sterilizeURL => {
+                            return (
+                                <Box rounded="md" padding="3" marginX="3" bg="teal.700" color="teal.50" maxW="sm" d="flex" flexDir="column">
+                                    <Heading>{sterilizeURL.plastic}</Heading>
+                                    <Link href={sterilizeURL.sterilization}>
+                                        <Box d="flex" alignItems="center" justifyContent="center" bg="teal.50" color="teal.700" p="4" alignContent="center">
+                                            <Text>Download</Text>
+                                        </Box>
+                                    </Link>
+                                </Box>
+
+                            )
+                        })}
+                    </Box>
+                </Box>
+                <Box>
+                  <Heading>Donate it</Heading>
+                  <Text>To do: put a link to the "how to donate" page</Text>
                 </Box>
             </Flex>
             <Divider marginY="3"/>

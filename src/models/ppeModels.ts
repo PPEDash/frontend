@@ -12,7 +12,7 @@ export interface PrintableProduct {
     id?: string
     makers: string[]
     originalURL: string
-    plasticType: string[]
+    plasticType: any[]
     supports: boolean
     type: PPETypes,
     downloadURLs: ({
@@ -29,7 +29,7 @@ export interface CuttableProduct {
     id?: string
     makers: string[]
     originalURL: string
-    plasticType: string[]
+    plasticType: any[]
     supports: boolean
     type: PPETypes,
     downloadURLs: ({
